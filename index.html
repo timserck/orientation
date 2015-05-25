@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+	<head> 
+		<meta charset="utf-8" />
+		<meta name="viewport" content="initial-scale=1.0">
+		<title>ma page</title>
+		<style>
+		html,body{
+			position: relative;
+			margin: 0;
+			padding: 0;
+			height: 100%;
+			width: 100%;
+
+
+			background: url('img/pistolet.png') no-repeat center fixed; 
+  			-webkit-background-size: cover; /* pour anciens Chrome et Safari */
+  			-moz-background-size: cover; /* pour anciens Chrome et Safari */
+  			background-size: cover; /* version standardisée */
+			
+		}
+
+		/*.audioDemo{
+			display: none;
+		}*/
+
+		.orientation{
+			position: absolute;
+			top: 80%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+		</style>
+	</head>
+	
+	<body>
+
+<p class="orientation">0</p>
+<p class="test">test</p>
+<p class="load">none</p>
+
+<audio class="audioDemo" controls autoplay="true" preload="none">
+  <source src="audio/canon.mp3" type="audio/mp3">
+Your browser does not support the audio element.
+</audio>
+		
+		
+ <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+
+		<script>
+//http://www.html5rocks.com/en/tutorials/device/orientation/
+//like a compass / earth for android and like the center of the device for safari device
+$( document ).ready(function() {
+	//set the variable audioDEmo (the playeur)
+	var  audioDemo = $(".audioDemo");
+
+	//set the variable audioDemo (test)
+	var  test = $(".test");
+
+	//set the variable audioDemo (load)
+	var  load = $(".load");
+
+	//set the variable orientation
+	var  orientation = $(".orientation");
+
+	//set the variable body
+   var body = document.body;
+    
+    audioDemo.bind("load",function(){
+        load.html("Audio Loaded succesfully");
+    });
+    audioDemo.trigger('load');
+
+    	
+
+    
+// Check to make sure the browser supprots DeviceOrientationEvents
+if (window.DeviceOrientationEvent) {
+
+
+  // Create an event listener
+  window.addEventListener('deviceorientation', function(event) {
+
+  
+
+    // Get the direction of the device (in degrees). like a compass / earth for android and like the center of the device for safari device
+    var direction = Math.round(event.alpha);
+
+   		test.html("direction" + direction );
+    	body.style.backgroundColor = "white";
+    	orientation.html("turn left your phone");
+    	
+   		
+    	audioDemo.trigger('pause');
+    	audioDemo.prop("currentTime",0);
+    
+    // if the alpha angle is between  90 to 190 degree
+    if( (direction > 90) && (direction < 190) ){
+
+    	//the element with class decompte change to gooooooooooo
+    	orientation.html("gooooooooooooo");
+    	
+    	//the audio toggle to play
+    	audioDemo.trigger('play');
+    	
+    	// set the background color to red
+    	body.style.backgroundColor = "red"; 	
+    }
+
+  });
+
+   
+}
+});
+	
+		</script> 
+	</body>
+</html>
